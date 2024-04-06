@@ -30,9 +30,11 @@ public class Server {
                   new OutputStreamWriter(connection.getOutputStream()));
           ) {
             String line = serverReader.readLine();
+
+//            System.out.println();
             LOG.debug("Request captured: " + line);
             // В реализации по умолчанию в ответе пишется та же строка, которая пришла в запросе
-            serverWriter.write(line);
+            serverWriter.write(RequestHandler.execute(line));
             serverWriter.flush();
           }
         } catch (Exception e) {

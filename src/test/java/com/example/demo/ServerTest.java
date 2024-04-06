@@ -222,6 +222,7 @@ class ServerTest extends AbstractServerTest {
   }
 
   private String createTask(String user, String task) {
+
     return sendMessage(format("%s CREATE_TASK %s", user, task));
   }
 
