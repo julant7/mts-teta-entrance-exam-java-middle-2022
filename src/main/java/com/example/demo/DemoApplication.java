@@ -8,17 +8,18 @@ public class DemoApplication {
     Server server = new Server();
     try {
       server.start();
-      System.out.println(RequestHandler.execute("VASYA CREATE_TASK CleanRoom"));
+      RequestHandler requestHandler = new RequestHandler();
+      System.out.println(requestHandler.execute("VASYA CREATE_TASK CleanRoom"));
 
-      System.out.println(RequestHandler.execute("PETYA DELETE_TASK CleanRoom"));
+      System.out.println(requestHandler.execute("PETYA DELETE_TASK CleanRoom"));
 
-      System.out.println(RequestHandler.execute("PETYA CREATE_TASK Task1"));
+      System.out.println(requestHandler.execute("PETYA CREATE_TASK Task1"));
 
-      System.out.println(RequestHandler.execute("PETYA CREATE_TASK Task2"));
+      System.out.println(requestHandler.execute("PETYA CREATE_TASK Task2"));
 
-      System.out.println(RequestHandler.execute("VASYA LIST_TASK PETYA"));
+      System.out.println(requestHandler.execute("VASYA LIST_TASK PETYA"));
 
-      System.out.println(RequestHandler.execute("VASYA CREATE_TASK CleanRoom"));
+      System.out.println(requestHandler.execute("VASYA CREATE_TASK CleanRoom"));
 
     } catch (IOException e) {
         throw new RuntimeException(e);

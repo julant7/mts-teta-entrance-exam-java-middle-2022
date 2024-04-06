@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.entity;
 
 import com.example.demo.enums.TaskStatus;
 
@@ -16,10 +16,6 @@ public class Task {
 
     public TaskStatus getTaskStatus() {
         return taskStatus;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setTaskStatus(TaskStatus taskStatus) {

@@ -31,10 +31,11 @@ public class Server {
           ) {
             String line = serverReader.readLine();
 
+            RequestHandler requestHandler = new RequestHandler();
 //            System.out.println();
             LOG.debug("Request captured: " + line);
             // В реализации по умолчанию в ответе пишется та же строка, которая пришла в запросе
-            serverWriter.write(RequestHandler.execute(line));
+            serverWriter.write(requestHandler.execute(line));
             serverWriter.flush();
           }
         } catch (Exception e) {

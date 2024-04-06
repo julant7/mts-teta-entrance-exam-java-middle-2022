@@ -1,19 +1,21 @@
-package com.example.demo;
+package com.example.demo.service;
 
+import com.example.demo.entity.Task;
 import com.example.demo.enums.ResultStatus;
 import com.example.demo.enums.TaskStatus;
 
 import java.util.*;
 
-public class Command {
+public class CommandServiceImpl implements CommandService {
+
     // Нужно быстро искать, существует ли открытая/закрытая задача с таким названием. Для этой цели используем HashSet
     static Set<String> openAndCloseTasks = new HashSet<>();
 
     // Нужно быстро искать, существует ли данный пользователь
     static Map<String, ArrayList<Task>> tasksOfUsers = new HashMap<>();
-    String sender = "", arg = "",  possibleCommandType;
 
-    public String createTask() {
+    @Override
+    public String createTask(String sender, String arg) {
         if (openAndCloseTasks.contains(arg))
             return ResultStatus.ERROR.toString();
         openAndCloseTasks.add(arg);
@@ -21,7 +23,9 @@ public class Command {
         tasksOfUsers.get(sender).add(new Task(arg, TaskStatus.CREATED));
         return ResultStatus.CREATED.toString();
     }
-    public String closeTask() {
+
+    @Override
+    public String closeTask(String sender, String arg) {
         if (!tasksOfUsers.containsKey(sender)) {
             if (openAndCloseTasks.contains(arg)) return ResultStatus.ACCESS_DENIED.toString();
             return ResultStatus.ERROR.toString();
@@ -35,9 +39,10 @@ public class Command {
         }
         if (openAndCloseTasks.contains(arg)) return ResultStatus.ACCESS_DENIED.toString();
         return ResultStatus.ERROR.toString();
-
     }
-    public String deleteTask() {
+
+    @Override
+    public String deleteTask(String sender, String arg) {
         if (!tasksOfUsers.containsKey(sender)) {
             if (openAndCloseTasks.contains(arg)) return ResultStatus.ACCESS_DENIED.toString();
             return ResultStatus.ERROR.toString();
@@ -56,7 +61,9 @@ public class Command {
         if (openAndCloseTasks.contains(arg)) return ResultStatus.ACCESS_DENIED.toString();
         return ResultStatus.ERROR.toString();
     }
-    public String reopenTask() {
+
+    @Override
+    public String reopenTask(String sender, String arg) {
         if (!tasksOfUsers.containsKey(sender)) {
             if (openAndCloseTasks.contains(arg)) return ResultStatus.ACCESS_DENIED.toString();
             return ResultStatus.ERROR.toString();
@@ -77,7 +84,9 @@ public class Command {
         if (openAndCloseTasks.contains(arg)) return ResultStatus.ACCESS_DENIED.toString();
         return ResultStatus.ERROR.toString();
     }
-    public String getListTask() {
+
+    @Override
+    public String getListTask(String sender, String arg) {
         if (!tasksOfUsers.containsKey(arg))
             return ResultStatus.ERROR.toString();
         ArrayList<Task> mapWithTasks = tasksOfUsers.get(arg);
@@ -88,9 +97,9 @@ public class Command {
         return ResultStatus.TASKS + " " + namesOfTasks;
     }
 
+    @Override
     public void deleteAll() {
         openAndCloseTasks.clear();
         tasksOfUsers.clear();
     }
-
 }
